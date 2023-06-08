@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { searchArtworks } from '../api';
 import { SearchForm } from './SearchForm';
@@ -11,6 +11,8 @@ export function App() {
 	const [searchData, setSearchData] = useState([]);
 	const [showImageDetails, setShowImageDetails] = useState(false);
 	const [imageId, setImageId] = useState('');
+	const [imageName, setImageName] = useState('');
+	const [imageArtist, setImageArtist] = useState('');
 
 	function onSearchSubmit(query) {
 		// Search for the users's query.
@@ -25,8 +27,10 @@ export function App() {
 		});
 	}
 
-	function onShowDetails(currentImageId) {
-		setImageId(currentImageId);
+	function onShowDetails(artist, id, name) {
+		setImageArtist(artist);
+		setImageId(id);
+		setImageName(name);
 		setShowImageDetails(true);
 	}
 
@@ -35,8 +39,8 @@ export function App() {
 			<span
 				role="link"
 				tabIndex={0}
-				onClick={() => onShowDetails(x.image_id)}
-				onKeyDown={() => onShowDetails(x.image_id)}
+				onClick={() => onShowDetails(x.artist_title, x.image_id, x.title)}
+				onKeyDown={() => onShowDetails(x.artist_title, x.image_id, x.title)}
 			>
 				{x.title}
 			</span>{' '}
@@ -48,7 +52,11 @@ export function App() {
 		<div className="App">
 			<h1>TCL Career Lab Art Finder</h1>
 			{showImageDetails ? (
-				<ImageDetailsPage imageId={imageId} />
+				<ImageDetailsPage
+					imageArtist={imageArtist}
+					imageId={imageId}
+					imageName={imageName}
+				/>
 			) : (
 				<>
 					<SearchForm onSearchSubmit={onSearchSubmit} />
