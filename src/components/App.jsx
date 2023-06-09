@@ -11,7 +11,7 @@ export function App() {
 	const [searchData, setSearchData] = useState([]);
 	const [showImageDetails, setShowImageDetails] = useState(false);
 	const [imageId, setImageId] = useState('');
-	const [imageName, setImageName] = useState('');
+	const [imageTitle, setImageTitle] = useState('');
 	const [imageArtist, setImageArtist] = useState('');
 
 	function onSearchSubmit(query) {
@@ -27,24 +27,24 @@ export function App() {
 		});
 	}
 
-	function onShowDetails(artist, id, name) {
+	function onShowDetails(artist, id, title) {
 		setImageArtist(artist);
 		setImageId(id);
-		setImageName(name);
+		setImageTitle(title);
 		setShowImageDetails(true);
 	}
 
-	const results = searchData.map((x) => (
-		<li key={x.image_id}>
+	const results = searchData.map(({ artist_title, image_id, title }) => (
+		<li key={image_id}>
 			<span
 				role="link"
 				tabIndex={0}
-				onClick={() => onShowDetails(x.artist_title, x.image_id, x.title)}
-				onKeyDown={() => onShowDetails(x.artist_title, x.image_id, x.title)}
+				onClick={() => onShowDetails(artist_title, image_id, title)}
+				onKeyDown={() => onShowDetails(artist_title, image_id, title)}
 			>
-				{x.title}
+				{title}
 			</span>{' '}
-			- {x.artist_title}
+			- {artist_title}
 		</li>
 	));
 
@@ -55,7 +55,7 @@ export function App() {
 				<ImageDetailsPage
 					imageArtist={imageArtist}
 					imageId={imageId}
-					imageName={imageName}
+					imageTitle={imageTitle}
 				/>
 			) : (
 				<>
