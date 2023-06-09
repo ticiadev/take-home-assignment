@@ -34,6 +34,10 @@ export function App() {
 		setShowImageDetails(true);
 	}
 
+	function onReturn() {
+		setShowImageDetails(false);
+	}
+
 	const results = searchData.map(({ artist_title, image_id, title }) => (
 		<li key={image_id}>
 			<span
@@ -56,6 +60,7 @@ export function App() {
 					imageArtist={imageArtist}
 					imageId={imageId}
 					imageTitle={imageTitle}
+					onReturn={onReturn}
 				/>
 			) : (
 				<>
