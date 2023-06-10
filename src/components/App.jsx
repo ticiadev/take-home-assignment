@@ -30,14 +30,16 @@ export function App() {
 
 	const results = searchData.map((artwork) => (
 		<li key={artwork.image_id}>
-			<span
-				role="link"
+			<a
+				href="#"
 				tabIndex={0}
 				onClick={() => onShowDetails(artwork)}
-				onKeyDown={() => onShowDetails(artwork)}
+				onKeyDown={(e) =>
+					(e.key === 'Enter' || e.key === ' ') && onShowDetails(artwork)
+				}
 			>
 				{artwork.title}
-			</span>{' '}
+			</a>{' '}
 			- {artwork.artist_title}
 		</li>
 	));
