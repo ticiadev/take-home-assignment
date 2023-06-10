@@ -10,9 +10,7 @@ import { ImageDetailsPage } from './ImageDetailsPage';
 export function App() {
 	const [searchData, setSearchData] = useState([]);
 	const [showImageDetails, setShowImageDetails] = useState(false);
-	const [imageId, setImageId] = useState('');
-	const [imageTitle, setImageTitle] = useState('');
-	const [imageArtist, setImageArtist] = useState('');
+	const [artwork, setArtwork] = useState();
 
 	function onSearchSubmit(query) {
 		// Search for the users's query.
@@ -27,10 +25,8 @@ export function App() {
 		});
 	}
 
-	function onShowDetails(artist, id, title) {
-		setImageArtist(artist);
-		setImageId(id);
-		setImageTitle(title);
+	function onShowDetails(artwork) {
+		setArtwork(artwork);
 		setShowImageDetails(true);
 	}
 
@@ -38,17 +34,17 @@ export function App() {
 		setShowImageDetails(false);
 	}
 
-	const results = searchData.map(({ artist_title, image_id, title }) => (
-		<li key={image_id}>
+	const results = searchData.map((artwork) => (
+		<li key={artwork.image_id}>
 			<span
 				role="link"
 				tabIndex={0}
-				onClick={() => onShowDetails(artist_title, image_id, title)}
-				onKeyDown={() => onShowDetails(artist_title, image_id, title)}
+				onClick={() => onShowDetails(artwork)}
+				onKeyDown={() => onShowDetails(artwork)}
 			>
-				{title}
+				{artwork.title}
 			</span>{' '}
-			- {artist_title}
+			- {artwork.artist_title}
 		</li>
 	));
 
@@ -56,12 +52,7 @@ export function App() {
 		<div className="App">
 			<h1>TCL Career Lab Art Finder</h1>
 			{showImageDetails ? (
-				<ImageDetailsPage
-					imageArtist={imageArtist}
-					imageId={imageId}
-					imageTitle={imageTitle}
-					onReturn={onReturn}
-				/>
+				<ImageDetailsPage artwork={artwork} onReturn={onReturn} />
 			) : (
 				<>
 					<SearchForm onSearchSubmit={onSearchSubmit} />
