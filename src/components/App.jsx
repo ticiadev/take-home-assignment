@@ -28,6 +28,8 @@ export function App() {
 		setShowImageDetails(false);
 	}
 
+	// Uses an anchor tag with an empty href attribute to remain
+	// within application scope; React Router would be out of scope
 	const results = searchData.map((artwork) => (
 		<li key={artwork.image_id}>
 			<a
